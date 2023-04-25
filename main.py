@@ -12,7 +12,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 
 token = '5908448826:AAFyiDCuk3Y3i1R-uoEZa1K6jKbjtXFaPAg'
-bot = telebot.TeleBot(config.token)
+bot = telebot.TeleBot(config.Token)
 
 
 with open('model_clf.pkl', 'rb') as fid:
