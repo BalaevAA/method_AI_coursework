@@ -1,7 +1,6 @@
-import telegram
-from telegram.ext import Updater, MessageHandler, Filters
+import telebot
+import config
 import numpy as np
-from keras.models import load_model
 import pickle
 import nltk
 import re
@@ -9,12 +8,16 @@ nltk.download('stopwords')
 nltk.download('wordnet')
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
-
 from sklearn.feature_extraction.text import CountVectorizer
 
-# Load the pre-trained model
+
+token = '5908448826:AAFyiDCuk3Y3i1R-uoEZa1K6jKbjtXFaPAg'
+bot = telebot.TeleBot(config.token)
+
+
 with open('model_clf.pkl', 'rb') as fid:
     model = pickle.load(fid)
+
 
 def preprocess(user_input):
     cv = CountVectorizer()
@@ -28,35 +31,22 @@ def preprocess(user_input):
     processed_text.append(text_p)
     return cv.fit_transform(processed_text).toarray()
 
+
 def convert_result(res):
     d = {0: 'Это обычное сообщение. Оно не является ни спамом, ни новостью',
          1: 'Данное сообщение является новостным',
          2: 'Данное сообщение является спамом'}
     return d[res]
 
-# Define the message handler
-def message_handler(update, context):
-    # Get the user's message
-    user_input = update.message.text
 
-    # Preprocess the user's input
+@bot.message_handler(content_types=["text"])
+def get_messages(message): 
+    user_input = message.text
     preprocessed_input = preprocess(user_input)
-
-    # Feed the preprocessed input into the model
     prediction = model.predict(preprocessed_input)
-
-    # Convert the prediction to text
     convert_res = convert_result(prediction)
+    bot.send_message(message.chat.id, convert_res)
 
-    # Return the prediction to the user
-    update.message.reply_text(convert_res)
 
-# Set up the Telegram bot
-updater = Updater('5908448826:AAFyiDCuk3Y3i1R-uoEZa1K6jKbjtXFaPAg', use_context=True)
-dispatcher = updater.dispatcher
-
-# Add the message handler
-dispatcher.add_handler(MessageHandler(Filters.text, message_handler))
-
-# Start the bot
-updater.start_polling()
+if __name__ == '__main__':
+     bot.infinity_polling()
