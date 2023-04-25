@@ -21,15 +21,7 @@ with open('model_clf.pkl', 'rb') as fid:
 
 def preprocess(user_input):
     cv = CountVectorizer()
-    lemm = WordNetLemmatizer()
-    processed_text = []
-    nltk.download('omw-1.4')
-    text = re.sub('^a-zA-z',' ',user_input)
-    words = text.split()
-    words = [lemm.lemmatize(word) for word in words if word not in set(stopwords.words('russian'))]
-    text_p = ' '.join(words)
-    processed_text.append(text_p)
-    return cv.fit_transform(processed_text).toarray()
+    return cv.transform(user_input)
 
 
 def convert_result(res):
