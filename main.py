@@ -49,10 +49,13 @@ help_msg="""Привет. Я чат-бот, призванный боротьс�
 @bot.message_handler(commands=["set_model"])
 def set_model(message):
     if (message.chat.type == 'private' and message.chat.id in admins):
-        global model
-        split = message.text.split()
-        model = int(split[1]) - 1
-        bot.send_message(chat_id=message.chat.id, text=f'Модель изменена на {models[model][1]}')
+        try:
+            global model
+            split = message.text.split()
+            model = int(split[1]) - 1
+            bot.send_message(chat_id=message.chat.id, text=f'Модель изменена на {models[model][1]}')
+        except:
+            bot.send_message(chat_id=message.chat.id, text=f'Напишите число от 1 до {len(models)} после команды /set_model')
     else:
          bot.send_message(chat_id=message.chat.id, text='Команда доступна только в личных сообщениях и только администратору')
 
