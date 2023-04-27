@@ -7,16 +7,16 @@ token = '5908448826:AAFyiDCuk3Y3i1R-uoEZa1K6jKbjtXFaPAg'
 bot = telebot.TeleBot(token)
 
 
-with open('model_clf.pkl', 'rb') as fid:
+with open('./models/model_clf.pkl', 'rb') as fid:
     model_multNB = pickle.load(fid)
 
-with open('clf.pkl', 'rb') as fid:
+with open('./models/clf.pkl', 'rb') as fid:
     model_Adaboost = pickle.load(fid)
 
-with open('cv.pk', 'rb') as fid:
+with open('./cv/cv.pk', 'rb') as fid:
     multiNB_cv = pickle.load(fid)
 
-with open('cv_adaboost.pk', 'rb') as fid:
+with open('./cv/cv_adaboost.pk', 'rb') as fid:
     adaboost_cv = pickle.load(fid)
 
 
