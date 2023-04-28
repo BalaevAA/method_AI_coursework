@@ -1,0 +1,6 @@
+token = '5908448826:AAFyiDCuk3Y3i1R-uoEZa1K6jKbjtXFaPAg'
+multiNB_path = './models/model_multiNB.pkl'
+adaboost_path = './models/model_adaboost.pkl'
+catboost_path = './models/model_catboost.pkl'
+cv_path = './cv/cv.pkl'
+db_name = 'models.db'

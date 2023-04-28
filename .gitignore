@@ -1,2 +1,4 @@
-/my_project
 /venv
+**/__pycache__
+/my_project
+models.db
